@@ -2,7 +2,7 @@ from pokesquad import files
 
 
 class Pokemon:
-    # Parameters: name (string), _id (integer), type1 (pokemon.Type), type2 (pokemon.Type), ability (pokemon.Ability)
+    # Parameters: name (string), type1 (pokemon.Type), type2 (pokemon.Type), ability (pokemon.Ability)
     def __init__(self, name, _id, type1=None, type2=None, ability=None):
         self.name = name
         self._id = _id
@@ -35,9 +35,7 @@ class Pokemon:
         attacks = [defender.defend(self.get_type1())]
         if self.is_dual_type():
             attacks.append(defender.defend(self.get_type2()))
-        else:
-            attacks.append(-1.0)
-        return attacks
+        return max(attacks)
 
     # Parameters: attack_type (pokemon.Type) - Returns float
     def defend(self, attack_type):
@@ -130,3 +128,35 @@ class Abilities:
             return self.abilities[name]
         else:
             return None
+
+
+class Weights:
+    @staticmethod
+    def get_type_weight(defense):
+        if -0.1 <= defense < 0.2:
+            return 0.35
+        elif 0.2 <= defense < 0.4:
+            return 0.4
+        elif 0.4 <= defense < 0.9:
+            return 0.5
+        elif 0.9 <= defense < 1.4:
+            return 1.0
+        elif 1.4 <= defense < 2.1:
+            return 6.0
+        elif defense >= 2.2:
+            return 6.5
+
+    @staticmethod
+    def get_matchup_weight(attack):
+        if attack >= 2.2:
+            return 0.4
+        elif 1.4 <= attack < 2.1:
+            return 0.5
+        elif 0.9 <= attack < 1.4:
+            return 1.1
+        elif 0.4 <= attack < 0.9:
+            return 3.0
+        elif 0.2 <= attack < 0.4:
+            return 3.5
+        elif -0.1 <= attack < 0.2:
+            return 3.7

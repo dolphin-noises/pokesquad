@@ -12,7 +12,7 @@ pokemon_list = []
 # float dict
 type_weight = {}
 # float dict
-pokemon_weight = {}
+matchup_weight = {}
 
 pokemon_file_list = files.FileParser.parse('pokemon.txt')
 
@@ -24,89 +24,54 @@ for x in range(0,len(pokemon_file_list)):
                                         ability=abilities.get_ability(pokemon_file_list[x][3])))
 
 
-def calculate(offensive_weight=1.0,defensive_weight=1.0):
-    if offensive_weight <= 0.0:
-        print('\nDefense only:')
-    elif defensive_weight <= 0.0:
-        print('\nOffense only:')
-    else:
-        print('\nMixed:')
+def calculate(attack_weight=1.0,defense_weight=1.0):
+    # Initialize weights
     for key in types.get_types().keys():
-        type_weight[key] = defensive_weight
-    for pk in pokemon_list:
-        pokemon_weight[pk.get_name()] = offensive_weight
+        type_weight[key] = 1.0
+    for mu in pokemon_list:
+        matchup_weight[mu.get_name()] = 1.0
+
     for ra in range(0, 6):
-        best_score = -200000.0
+        best_score = 0.0
         best_pokemon = None
+
         for pk in pokemon_list:
             defense_score = 0.0
-            offense_score = 0.0
-            if defensive_weight > 0.0:
-                for ty in types.get_types().values():
-                    defense_score += pk.defend(ty) * type_weight[ty.get_name()]
-                defense_score = 18 - defense_score
-            if offensive_weight > 0.0:
-                for mu in pokemon_list:
-                    attacks = pk.attack(mu)
-                    weighted_attacks = []
-                    for at in attacks:
-                        weighted_attacks.append(at * pokemon_weight[mu.get_name()])
-                    if defensive_weight > 0.0:
-                        counter_weight = defensive_weight
-                        counter_attack = max(mu.attack(pk))
-                        if 0 <= counter_attack < 0.25:
-                            counter_weight *= 1.2
-                        elif 0.25 <= counter_attack < 0.5:
-                            counter_weight *= 1.2
-                        elif 0.5 <= counter_attack < 1.0:
-                            counter_weight *= 1.1
-                        elif 1.0 <= counter_attack < 2.0:
-                            counter_weight += 0.0
-                        elif 2.0 <= counter_attack < 4.0:
-                            counter_weight /= 2
-                        elif counter_attack >= 4.0:
-                            counter_weight /= 2.5
-                        offense_score += max(weighted_attacks) * counter_weight
-                    else:
-                        offense_score += max(weighted_attacks)
-                offense_score -= 69
-            balanced_score = (defense_score * 2) + offense_score
+            attack_score = 0.0
+
+            # Calculate the defense score against all types
+            for ty in types.get_types().values():
+                defense_score += (36 - pk.defend(ty)) * type_weight[ty.get_name()]
+
+            # Calculate the offense against all matchups
+            for mu in pokemon_list:
+                attack_score += pk.attack(mu) * matchup_weight[mu.get_name()]
+                attack_score -= (mu.attack(pk) / 2) * defense_weight * matchup_weight[mu.get_name()]
+
+            # Calculate the full score
+            balanced_defense = defense_score * defense_weight
+            balanced_attack = attack_score * attack_weight
+            balanced_score = balanced_defense + balanced_attack
+
+            # Is this the best score?
             if balanced_score > best_score:
                 best_score = balanced_score
                 best_pokemon = pk
-        print(best_pokemon.get_name())
-        if defensive_weight > 0.0:
-            for key, value in types.get_types().items():
-                defense = best_pokemon.defend(value)
-                if 0 <= defense < 0.25:
-                    type_weight[key] /= 6.5
-                elif 0.25 <= defense < 0.5:
-                    type_weight[key] /= 6
-                elif 0.5 <= defense < 1.0:
-                    type_weight[key] /= 4
-                elif 1.0 <= defense < 2.0:
-                    type_weight[key] += 0
-                elif 2.0 <= defense < 4.0:
-                    type_weight[key] *= 4
-                elif defense >= 4.0:
-                    type_weight[key] *= 4.5
-        if offensive_weight > 0.0:
-            for mu in pokemon_list:
-                key = mu.get_name()
-                attack = max(best_pokemon.attack(mu))
-                if attack >= 4.0:
-                    pokemon_weight[key] /= 6.5
-                elif 2.0 <= attack < 4.0:
-                    pokemon_weight[key] /= 6
-                elif 1.0 <= attack < 2.0:
-                    pokemon_weight[key] += 0
-                elif 0.5 <= attack < 1.0:
-                    pokemon_weight[key] *= 1.5
-                elif 0.25 <= attack < 0.5:
-                    pokemon_weight[key] *= 2
-                elif 0 <= attack < 0.25:
-                    pokemon_weight[key] *= 2.5
 
-calculate(1.0,0.0)
-calculate(0.0,1.0)
-calculate(1.0,1.0)
+        # Print the Pokemon with the best score
+        print(best_pokemon.get_name())
+
+        # Weigh the types and Pokemon for the next run
+        for key, value in types.get_types().items():
+            defense = best_pokemon.defend(value)
+            type_weight[key] *= pokemon.Weights.get_type_weight(defense)
+        for mu in pokemon_list:
+            attack = best_pokemon.attack(mu)
+            matchup_weight[mu.get_name()] *= pokemon.Weights.get_matchup_weight(attack)
+
+
+calculate(attack_weight=1.0,defense_weight=0.0)
+print('\n')
+calculate(attack_weight=0.0,defense_weight=1.0)
+print('\n')
+calculate(attack_weight=1.0,defense_weight=1.0)
