@@ -2,7 +2,7 @@ from pokesquad import files
 
 
 class Pokemon:
-    # Parameters: name (string), type1 (pokemon.Type), type2 (pokemon.Type), ability (pokemon.Ability)
+    # Parameters: name (string), _id (integer), type1 (pokemon.Type), type2 (pokemon.Type), ability (pokemon.Ability)
     def __init__(self, name, _id, type1=None, type2=None, ability=None):
         self.name = name
         self._id = _id
