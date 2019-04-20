@@ -1,0 +1,14 @@
+dry skin|fire:1.25,water:0.0
+flash fire|fire:0.0
+fluffy|fire:2.0
+heatproof|fire:0.5
+levitate|ground:0.0
+lightning rod|electric:0.0
+motor drive|electric:0.0
+sap sipper|grass:0.0
+storm drain|water:0.0
+thick fat|fire:0.5,ice:0.5
+volt absorb|electric:0.0
+water absorb|water:0.0
+water bubble|fire:0.5
+wonder guard|normal:0.0,fighting:0.0,poison:0.0,ground:0.0,bug:0.0,steel:0.0,water:0.0,grass:0.0,electric:0.0,psychic:0.0,ice:0.0,dragon:0.0,fairy:0.0

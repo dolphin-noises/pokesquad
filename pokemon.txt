@@ -1,0 +1,69 @@
+Serperior|grass||
+Emboar|fire|fighting|
+Samurott|water||
+Watchog|normal||
+Stoutland|normal||
+Liepard|dark||
+Simisage|grass||
+Simisear|fire||
+Simipour|water||
+Musharna|psychic||
+Unfezant|normal|flying|
+Zebstrika|electric||lightning rod
+Gigalith|rock||
+Swoobat|psychic|flying|
+Excadrill|ground|steel|
+Audino|normal||
+Conkeldurr|fighting||
+Seismitoad|water|ground|
+Throh|fighting||
+Sawk|fighting||
+Leavanny|bug|grass|
+Scolipede|bug|poison|
+Whimsicott|grass|fairy|
+Lilligant|grass||
+Basculin|water||
+Krookodile|ground|dark|
+Darmanitan|fire||
+Maractus|grass||water absorb
+Crustle|bug|rock|
+Scrafty|dark|fighting|
+Sigilyph|psychic|flying|
+Cofagrigus|ghost||
+Carracosta|water|rock|
+Archeops|rock|flying|
+Garbodor|poison||
+Zoroark|dark||
+Cinccino|normal||
+Gothitelle|psychic||
+Reuniclus|psychic||
+Swanna|water|flying|
+Vanilluxe|ice||
+Sawsbuck|normal|grass|sap sipper
+Emolga|electric|flying|
+Escavalier|bug|steel|
+Amoonguss|grass|poison|
+Jellicent|water|ghost|water absorb
+Alomomola|water||
+Galvantula|bug|electric|
+Ferrothorn|grass|steel|
+Klinklang|steel||
+Eelektross|electric||levitate
+Beheeyem|psychic||
+Chandelure|ghost|fire|flash fire
+Haxorus|dragon||
+Beartic|ice||
+Cryogonal|ice||levitate
+Accelgor|bug||
+Stunfisk|ground|electric|
+Mienshao|fighting||
+Druddigon|dragon||
+Golurk|ground|ghost|
+Bisharp|dark|steel|
+Bouffalant|normal||sap sipper
+Braviary|normal|flying|
+Mandibuzz|dark|flying|
+Heatmor|fire||flash fire
+Durant|bug|steel|
+Hydreigon|dark|dragon|levitate
+Volcarona|bug|fire|
